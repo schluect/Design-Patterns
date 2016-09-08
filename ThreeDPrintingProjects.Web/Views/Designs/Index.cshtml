@@ -1,0 +1,81 @@
+﻿@using ThreeDPrintingProjects.Services.DesignRepo.Model
+@using ThreeDPrintingProjects.Web.Models.Designs
+@model ThreeDPrintingProjects.Web.Models.Designs.DesignSearchModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h2>Add Designs to Your Project</h2>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-default btn-lg" href="/project/summary" style="margin-top: 20px">View Summary</a>
+    </div>
+</div>
+<form method="GET">
+    <input type="text" name="keyword" placeholder="Enter term..." value="@Model.Keyword"/>
+    <button type="submit">Submit</button>
+    <button type="submit" class="clear">Clear</button>
+</form>
+<div>
+    @for (int i = 0; i < Model.Designs.Count; i++)
+    {
+        DesignModel design = Model.Designs[i];
+        @Html.Raw(i % 3 == 0?"<div class=\"row\">":"")
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img alt="@design.Name" src="@design.Thumbnail" style="height: 200px; width: 100%; display: block;">
+                <div class="caption">
+                    <h3>@design.Name</h3>
+                    <p>
+                        <a href="@design.Public_Url" class="btn btn-primary" role="button" target="_blank">Details</a>
+                        <a href="#" class="btn btn-default @(!design.HasBeenAdded?"":"hidden")" role="button" data-action="add" data-action-id="@design.Id">Add</a>
+                        <a href="#" class="btn btn-default @(design.HasBeenAdded?"":"hidden")" role="button" data-action="remove" data-action-id="@design.Id">Remove</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        @Html.Raw(i % 3 == 2 ? "</div>" : "")
+    }
+</div>
+@section scripts
+{
+    <script>
+        $(function() {
+            $(".clear").click(function() {
+                $("[name=keyword]").val("");
+            });
+
+            var addDesign = function($elem) {
+                var id = $elem.data("action-id");
+                $.post("/designs/add/" + id, function (data) {
+                    if (data.Success) {
+                        $elem.addClass("hidden");
+                        $elem.siblings("[data-action=remove]").removeClass("hidden");
+                    }
+                });
+            },
+            removeDesign = function ($elem) {
+                var id = $elem.data("action-id");
+                $.post("/designs/remove/" + id, function (data) {
+                    if (data.Success) {
+                        $elem.addClass("hidden");
+                        $elem.siblings("[data-action=add]").removeClass("hidden");
+                    }
+                });
+
+            };
+            $("[data-action]").click(function () {
+                var $elem = $(this);
+                var actionType = $elem.data("action");
+                if (actionType === "add") {
+                    addDesign($elem);
+                } else if (actionType === "remove") {
+                    removeDesign($elem);
+                }
+            });
+        })
+    </script>
+}

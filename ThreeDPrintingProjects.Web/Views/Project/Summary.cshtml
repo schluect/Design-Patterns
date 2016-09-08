@@ -1,0 +1,18 @@
+﻿@using ThreeDPrintingProjects.Services.Project.Model
+@model ThreeDPrintingProjects.Services.Project.Model.SummaryModel
+
+<section>
+    <h1>@Model.Name</h1>
+    <p>@Model.Description</p>
+    <div class="col">
+        @foreach (SummaryDesignModel designModel in Model.SummaryDesignModels)
+        {
+            <div class="row">
+                <h4>@designModel.Name</h4>
+                <img src="@designModel.ImageUrl"/>
+                <a href="@designModel.DetailUrl">View on website</a>
+            </div>
+        }
+    </div>
+</section>
+
