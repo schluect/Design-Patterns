@@ -96,7 +96,7 @@
     <Compile Include="Project\Service\ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statistics\IStatsService.cs" />
-    <Compile Include="Statistics\IStatTrackDecotrator.cs" />
+    <Compile Include="Statistics\IStatTrackDecorator.cs" />
     <Compile Include="Statistics\Models\AddDesign.cs" />
     <Compile Include="Statistics\Models\ProjectSummaryCreation.cs" />
     <Compile Include="Statistics\Models\MetricType.cs" />

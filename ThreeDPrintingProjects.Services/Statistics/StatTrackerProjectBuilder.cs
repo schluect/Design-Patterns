@@ -8,7 +8,7 @@ using ThreeDPrintingProjects.Services.Statistics.Models;
 
 namespace ThreeDPrintingProjects.Services.Statistics
 {
-    public class StatTrackerProjectBuilder: IStatTrackDecotrator
+    public class StatTrackerProjectBuilder: IStatTrackDecorator
     {
         private IProjectBuilder _projectBuilder;
         private IStatsService _statsService;

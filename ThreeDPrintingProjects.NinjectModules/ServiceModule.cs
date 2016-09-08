@@ -17,7 +17,7 @@ namespace ThreeDPrintingProjects.NinjectModules
         {
             Bind<IProjectService>().To<ProjectService>();
             Bind<IProjectBuilder>().To<ProjectBuilder>().InTransientScope();
-            Bind<IStatTrackDecotrator>().To<StatTrackerProjectBuilder>().InTransientScope();
+            Bind<IStatTrackDecorator>().To<StatTrackerProjectBuilder>().InTransientScope();
             Bind<IStatsService>().To<StatsService>();
             Bind<IDesignRepoService>().To<DesignRepoService>();
         }

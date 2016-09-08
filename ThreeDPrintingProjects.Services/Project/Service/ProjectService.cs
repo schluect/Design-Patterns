@@ -66,7 +66,7 @@ namespace ThreeDPrintingProjects.Services.Project.Service
         public IProjectBuilder StartProject()
         {
             IProjectBuilder projectBuilder = ServiceLocator.Current.GetInstance<IProjectBuilder>();
-            IStatTrackDecotrator statDecoratorProjectBuilder = ServiceLocator.Current.GetInstance<IStatTrackDecotrator>();
+            IStatTrackDecorator statDecoratorProjectBuilder = ServiceLocator.Current.GetInstance<IStatTrackDecorator>();
 
             statDecoratorProjectBuilder.SetProjectBuilder(projectBuilder);
 

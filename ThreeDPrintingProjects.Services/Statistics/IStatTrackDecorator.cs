@@ -7,7 +7,7 @@ using ThreeDPrintingProjects.Services.Project.Builder;
 
 namespace ThreeDPrintingProjects.Services.Statistics
 {
-    public interface IStatTrackDecotrator : IProjectBuilder
+    public interface IStatTrackDecorator : IProjectBuilder
     {
         void SetProjectBuilder(IProjectBuilder projectBuilder);
     }
