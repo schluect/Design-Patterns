@@ -4,12 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThreeDPrintingProjects.Services.Project.Builder;
+using ThreeDPrintingProjects.Services.Statistics.Models;
 
 namespace ThreeDPrintingProjects.Services.Statistics
 {
-    public class StatTrackerProjectBuilder: IProjectBuilder
+    public class StatTrackerProjectBuilder: IStatTrackDecotrator
     {
         private IProjectBuilder _projectBuilder;
+        private IStatsService _statsService;
+        public StatTrackerProjectBuilder(IStatsService statsService)
+        {
+            _statsService = statsService;
+        }
+
         public void SetProjectBuilder(IProjectBuilder projectBuilder)
         {
             _projectBuilder = projectBuilder;
@@ -17,6 +24,7 @@ namespace ThreeDPrintingProjects.Services.Statistics
 
         public Project.Model.AddDesignResult BuildDesign(int id)
         {
+            _statsService.TrackAddDesign(new AddDesign(){ DesignId = id, DateCreated = DateTimeOffset.UtcNow });
             return _projectBuilder.BuildDesign(id);
         }
 
@@ -37,7 +45,13 @@ namespace ThreeDPrintingProjects.Services.Statistics
 
         public Project.Model.SummaryModel GetSummary()
         {
+            _statsService.TrackProjectSummaryCreation(new ProjectSummaryCreation(){ DesignIds = _projectBuilder.GetDesignIds(), DateCreated = DateTimeOffset.UtcNow });
             return _projectBuilder.GetSummary();
+        }
+
+        public ICollection<int> GetDesignIds()
+        {
+            return _projectBuilder.GetDesignIds();
         }
     }
 }

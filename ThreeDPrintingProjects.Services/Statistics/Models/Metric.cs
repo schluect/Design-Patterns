@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ThreeDPrintingProjects.Services.Statistics.Models
 {
-    public class ProjectCreation
+    public class Metric<T>
     {
+        public MetricType StatType { get; set; }
+        public T Data { get; set; }
     }
 }

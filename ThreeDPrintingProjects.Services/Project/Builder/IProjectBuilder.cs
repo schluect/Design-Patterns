@@ -16,5 +16,6 @@ namespace ThreeDPrintingProjects.Services.Project.Builder
         bool BuildProjectDetails(ProjectDetailModel projectDetailModel);
         bool ContainsDesign(int id);
         SummaryModel GetSummary();
+        ICollection<int> GetDesignIds();
     }
 }

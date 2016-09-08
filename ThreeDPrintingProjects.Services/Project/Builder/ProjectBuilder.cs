@@ -77,5 +77,10 @@ namespace ThreeDPrintingProjects.Services.Project.Builder
                 SummaryDesignModels = _designs.Values.Select(x=>new SummaryDesignModel{ Name = x.Name, ImageUrl = x.Thumbnail, DetailUrl = x.Public_Url }).ToList()
             };
         }
+
+        public ICollection<int> GetDesignIds()
+        {
+            return _designs.Keys;
+        } 
     }
 }

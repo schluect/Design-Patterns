@@ -7,6 +7,7 @@ using Ninject.Modules;
 using ThreeDPrintingProjects.Services.DesignRepo;
 using ThreeDPrintingProjects.Services.Project.Builder;
 using ThreeDPrintingProjects.Services.Project.Service;
+using ThreeDPrintingProjects.Services.Statistics;
 
 namespace ThreeDPrintingProjects.NinjectModules
 {
@@ -16,6 +17,8 @@ namespace ThreeDPrintingProjects.NinjectModules
         {
             Bind<IProjectService>().To<ProjectService>();
             Bind<IProjectBuilder>().To<ProjectBuilder>().InTransientScope();
+            Bind<IStatTrackDecotrator>().To<StatTrackerProjectBuilder>().InTransientScope();
+            Bind<IStatsService>().To<StatsService>();
             Bind<IDesignRepoService>().To<DesignRepoService>();
         }
     }

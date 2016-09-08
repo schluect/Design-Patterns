@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ThreeDPrintingProjects.Services.Statistics.Models
 {
-    public class AddDesign
+    public class ProjectSummaryCreation
     {
-        public int DesignId { get; set; }
+        public ICollection<int> DesignIds { get; set; }
         public DateTimeOffset DateCreated { get; set; }
     }
 }

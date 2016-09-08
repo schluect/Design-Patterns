@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using Ninject;
 using ThreeDPrintingProjects.Services.Project.Builder;
 using ThreeDPrintingProjects.Services.Project.Model;
+using ThreeDPrintingProjects.Services.Statistics;
 
 namespace ThreeDPrintingProjects.Services.Project.Service
 {
@@ -64,7 +65,12 @@ namespace ThreeDPrintingProjects.Services.Project.Service
 
         public IProjectBuilder StartProject()
         {
-            return ServiceLocator.Current.GetInstance<IProjectBuilder>();
+            IProjectBuilder projectBuilder = ServiceLocator.Current.GetInstance<IProjectBuilder>();
+            IStatTrackDecotrator statDecoratorProjectBuilder = ServiceLocator.Current.GetInstance<IStatTrackDecotrator>();
+
+            statDecoratorProjectBuilder.SetProjectBuilder(projectBuilder);
+
+            return statDecoratorProjectBuilder;
         }
     }
 }

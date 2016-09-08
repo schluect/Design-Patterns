@@ -9,7 +9,7 @@ namespace ThreeDPrintingProjects.Services.Statistics
 {
     public interface IStatsService
     {
-        void TrackProjeCreation(ProjectCreation projectCreation);
+        void TrackProjectSummaryCreation(ProjectSummaryCreation projectCreation);
         void TrackAddDesign(AddDesign addDesign);
     }
 }
