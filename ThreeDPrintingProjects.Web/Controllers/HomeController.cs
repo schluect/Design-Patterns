@@ -14,12 +14,6 @@ namespace ThreeDPrintingProjects.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IProjectService _projectService;
-        public HomeController(IProjectService projectService)
-        {
-            _projectService = projectService;
-        }
-
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)

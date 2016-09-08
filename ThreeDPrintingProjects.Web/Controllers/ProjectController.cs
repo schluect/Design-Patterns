@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ThreeDPrintingProjects.Services.DesignRepo.Model;
 using ThreeDPrintingProjects.Services.Project.Builder;
 using ThreeDPrintingProjects.Services.Project.Model;
 using ThreeDPrintingProjects.Services.Project.Service;
@@ -42,14 +43,7 @@ namespace ThreeDPrintingProjects.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                IProjectBuilder projectBuilder = _projectService.StartProject();
-                projectBuilder.BuildProjectDetails(new ProjectDetailModel
-                {
-                    Description = projectDetails.Description,
-                    Name = projectDetails.Name
-                });
-
-                SessionStateSink.ProjectBuilder = projectBuilder;
+                SessionStateSink.ProjectDetail = projectDetails;
                 return RedirectToAction("Index", "Designs");
             }
 
@@ -59,7 +53,18 @@ namespace ThreeDPrintingProjects.Web.Controllers
         [ProjectBuilderRequired]
         public ActionResult Summary()
         {
-            SummaryModel model = SessionStateSink.ProjectBuilder.GetSummary();
+            IDictionary<int, Design> designs = SessionStateSink.DesignsAdded;
+            var model = new SummaryModel()
+            {
+                Name = SessionStateSink.ProjectDetail.Name,
+                Description = SessionStateSink.ProjectDetail.Description,
+                SummaryDesignModels = designs!=null?designs.Values.Select(x=> new SummaryDesignModel
+                {
+                    Name = x.Name,
+                    DetailUrl = x.Public_Url,
+                    ImageUrl = x.Thumbnail
+                }).ToList():new List<SummaryDesignModel>()
+            };
 
             return View(model);
         }

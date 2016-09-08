@@ -35,12 +35,30 @@ namespace ThreeDPrintingProjects.Web.Controllers
 
         public ActionResult Add(int id)
         {
-            return Json(SessionStateSink.ProjectBuilder.BuildDesign(id));
+            Design design = _designRepoService.GetById(id);
+            if (design != null && !SessionStateSink.DesignsAdded.ContainsKey(id))
+            {
+                SessionStateSink.DesignsAdded.Add(id, design);
+                return Json(new { Success = true });
+            }
+            else
+            {
+                return Json(new {Success = false});
+            }
         }
 
         public ActionResult Remove(int id)
         {
-            return Json(SessionStateSink.ProjectBuilder.RemoveDesign(id));
+            Design design = _designRepoService.GetById(id);
+            if (design != null)
+            {
+                SessionStateSink.DesignsAdded.Remove(id);
+                return Json(new {Success = true});
+            }
+            else
+            {
+                return Json(new { Success = false });
+            }
         }
     }
 }
